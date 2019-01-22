@@ -23,8 +23,9 @@ public class ServicesController {
 	public Response insertService(@RequestParam String name,
 			@RequestParam int price,
 			@PathVariable String category,
-			@PathVariable String subcategory) {
-		Services services = new Services(ObjectId.get(), name, price, category, subcategory);
+			@PathVariable String subcategory,
+			@RequestParam String gender) {
+		Services services = new Services(ObjectId.get(), name, price, category, subcategory, gender);
 		service.insert(services);
 		List<Object> responseList = new ArrayList<>();
 		responseList.add(services);
@@ -35,6 +36,17 @@ public class ServicesController {
 	@GetMapping(value="/service")
 	public Response getAllServices() {
 		List<Services> list = service.getAllServices();
+		List<Object> responseList = new ArrayList<>();
+		for(int i=0; i<list.size(); i++) {
+			responseList.add(list.get(i));
+		}
+		Response response = new Response(200, responseList, "Okay from shivamvk");
+		return response;
+	}
+	
+	@GetMapping(value="/service/{category}")
+	public Response getServicesByCategory(@PathVariable String category) {
+		List<Services> list = service.getServiceByCategory(category);
 		List<Object> responseList = new ArrayList<>();
 		for(int i=0; i<list.size(); i++) {
 			responseList.add(list.get(i));

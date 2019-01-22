@@ -19,4 +19,8 @@ public class ServicesService {
 	public List<Services> getAllServices(){
 		return repository.findAll();
 	}
+	
+	public List<Services> getServiceByCategory(String category){
+		return repository.findByCategory(category);
+	}
 }

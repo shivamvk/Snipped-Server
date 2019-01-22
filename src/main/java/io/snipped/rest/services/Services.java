@@ -12,14 +12,16 @@ public class Services {
 	int price;
 	String category;
 	String subcategory;
+	String gender;
 	
-	public Services(ObjectId _id, String name, int price, String category, String subcategory) {
+	public Services(ObjectId _id, String name, int price, String category, String subcategory, String gender) {
 		super();
 		this._id = _id;
 		this.name = name;
 		this.price = price;
 		this.category = category;
 		this.subcategory = subcategory;
+		this.gender = gender;
 	}
 	
 	public String get_id() {
@@ -60,6 +62,14 @@ public class Services {
 
 	public void setSubcategory(String subcategory) {
 		this.subcategory = subcategory;
+	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	
 }
