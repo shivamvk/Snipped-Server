@@ -23,4 +23,8 @@ public class ServicesService {
 	public List<Services> getServiceByCategory(String category){
 		return repository.findByCategory(category);
 	}
+	
+	public Services getServiceById(String id) {
+		return repository.findById(id).get();
+	}
 }

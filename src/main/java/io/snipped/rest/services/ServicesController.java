@@ -54,4 +54,28 @@ public class ServicesController {
 		Response response = new Response(200, responseList, "Okay from shivamvk");
 		return response;
 	}
+	
+	@GetMapping(value="/service/id/{idstring}")
+	public Response getServicesById(@PathVariable String idstring) {
+		String[] array = idstring.split(",");
+		List<String> list = new ArrayList<>();
+		for(int i=0; i<array.length; i++) {
+			if(array[i].length() > 1) {
+				list.add(array[i]);
+			}
+		}
+		List<Object> responseList = new ArrayList<>();
+		for(int i=0; i<list.size(); i++) {
+			responseList.add(service.getServiceById(list.get(i)));
+		}
+		Response response = new Response(200, responseList, "Okay from shivamvk");
+		return response;
+	}
+	
+	
+	
+	
+	
+	
+	
 }
