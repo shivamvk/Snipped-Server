@@ -9,28 +9,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class PushNotificationsController {
-
-	private final String TOPIC = "order_placed";
 	
 	@Autowired
 	PushNotificationsService androidPushNotificationsService;
 
-	@RequestMapping(value = "/order_placed", method = RequestMethod.GET, produces = "application/json")
-	public ResponseEntity<String> send() throws JSONException {
+	@GetMapping(value = "/send_notification", produces = "application/json")
+	public ResponseEntity<String> send(
+			@RequestParam String topic,
+			@RequestParam String title,
+			@RequestParam String text) throws JSONException {
 
 		JSONObject body = new JSONObject();
-		body.put("to", "/topics/" + TOPIC);
+		body.put("to", "/topics/" + topic);
 		body.put("priority", "high");
 
 		JSONObject notification = new JSONObject();
-		notification.put("title", "Thanks for Ordering");
-		notification.put("body", "Your order has been placed succesfuly!");
+		notification.put("title", title);
+		notification.put("body", text);
 
 		body.put("notification", notification);
 
