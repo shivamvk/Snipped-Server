@@ -28,7 +28,7 @@ REST API on Springboot for Snipped - A salon booking app.
 	public Response insert(
 			@RequestParam String phone,
 			@RequestParam String services,
-			@RequestParam int amount,
+			@RequestParam String amount,
 			@RequestParam String address,
 			@RequestParam String date,
 			@RequestParam String time,
