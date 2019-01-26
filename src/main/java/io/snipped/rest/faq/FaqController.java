@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.snipped.rest.response.Response;;
+import io.snipped.rest.response.Response;
 
 @RestController
 public class FaqController {
