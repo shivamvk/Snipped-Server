@@ -22,7 +22,7 @@ REST API on Springboot for Snipped - A salon booking app.
 	public String sendEmail(@RequestParam String email)
   
   
-##ORDER
+## ORDER
 
 @PostMapping(value="/order")
 	public Response insert(
@@ -76,7 +76,7 @@ REST API on Springboot for Snipped - A salon booking app.
 	public Response getAllImages()
 
 
-USER
+## USER
 
 @PostMapping("/user")
 	public boolean insertUser(@RequestParam String email, 
