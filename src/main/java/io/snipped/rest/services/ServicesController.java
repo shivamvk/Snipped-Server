@@ -24,8 +24,9 @@ public class ServicesController {
 			@RequestParam int price,
 			@PathVariable String category,
 			@PathVariable String subcategory,
-			@RequestParam String gender) {
-		Services services = new Services(ObjectId.get(), name, price, category, subcategory, gender);
+			@RequestParam String gender,
+			@RequestParam String description) {
+		Services services = new Services(ObjectId.get(), name, price, category, subcategory, gender, description);
 		service.insert(services);
 		List<Object> responseList = new ArrayList<>();
 		responseList.add(services);
@@ -71,11 +72,5 @@ public class ServicesController {
 		Response response = new Response(200, responseList, "Okay from shivamvk");
 		return response;
 	}
-	
-	
-	
-	
-	
-	
 	
 }

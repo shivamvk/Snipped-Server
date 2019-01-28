@@ -1,13 +1,17 @@
 package io.snipped.rest.order;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
+
+import io.snipped.rest.services.Services;
 
 public class Order {
 
 	ObjectId _id;
 	String phone;
-	String services;
-	int amount;
+	List<Services> services;
+	String amount;
 	String address;
 	String date;
 	String time;
@@ -16,7 +20,7 @@ public class Order {
 	String status;
 	String remarks;
 	
-	public Order(ObjectId _id, String phone, String services, int amount, String address, String date,
+	public Order(ObjectId _id, String phone, List<Services> services, String amount, String address, String date,
 			String time, String appointmentDate, String appointmentTime, String status, String remarks) {
 		super();
 		this._id = _id;
@@ -48,19 +52,19 @@ public class Order {
 		this.phone = phone;
 	}
 
-	public String getServices() {
+	public List<Services> getServices() {
 		return services;
 	}
 
-	public void setServices(String services) {
+	public void setServices(List<Services> services) {
 		this.services = services;
 	}
 
-	public int getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 
