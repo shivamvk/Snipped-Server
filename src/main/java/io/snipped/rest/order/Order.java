@@ -19,9 +19,10 @@ public class Order {
 	String appointmentTime;
 	String status;
 	String remarks;
+	String coupon;
 	
 	public Order(ObjectId _id, String phone, List<Services> services, String amount, String address, String date,
-			String time, String appointmentDate, String appointmentTime, String status, String remarks) {
+			String time, String appointmentDate, String appointmentTime, String status, String remarks, String coupon) {
 		super();
 		this._id = _id;
 		this.phone = phone;
@@ -34,6 +35,7 @@ public class Order {
 		this.appointmentTime = appointmentTime;
 		this.status = status;
 		this.remarks = remarks;
+		this.coupon = coupon;
 	}
 
 	public String get_id() {
@@ -122,6 +124,14 @@ public class Order {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	
+	public String getCoupon() {
+		return coupon;
+	}
+	
+	public void setCoupon(String coupon) {
+		this.coupon = coupon;
 	}
 	
 }

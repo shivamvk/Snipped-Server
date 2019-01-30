@@ -27,4 +27,19 @@ public class OrderService {
 		return repository.findByPhone(phone);
 	}
 	
+	public List<Order> getByAppointmentDate(String date){
+		return repository.findByAppointmentDate(date);
+	}
+	
+	public List<Order> getByUserAndStatus(String phone, String status){
+		return repository.findByPhoneAndStatus(phone, status);
+	}
+	
+	public List<Order> getByUserAndDate(String phone, String appointmentDate){
+		return repository.findByPhoneAndAppointmentDate(phone, appointmentDate);
+	}
+	
+	public void deleteById(String id) {
+		repository.deleteById(id);
+	}
 }
