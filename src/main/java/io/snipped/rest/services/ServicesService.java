@@ -27,4 +27,8 @@ public class ServicesService {
 	public Services getServiceById(String id) {
 		return repository.findById(id).get();
 	}
+	
+	public List<Services> getServiceByCategoryAndGender(String category, String gender){
+		return repository.findByCategoryAndGender(category, gender);
+	}
 }

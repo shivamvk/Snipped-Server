@@ -56,6 +56,20 @@ public class ServicesController {
 		return response;
 	}
 	
+	@GetMapping(value="/service/{category}/gender/{gender}")
+	public Response getServicesByCategoryAndGender(
+			@PathVariable String category,
+			@PathVariable String gender) {
+		List<Services> list = service.getServiceByCategoryAndGender(category, gender);
+		List<Object> responseList = new ArrayList<>();
+		for(int i=0; i<list.size(); i++) {
+			responseList.add(list.get(i));
+		}
+		Response response = new Response(200, responseList, "Okay from shivamvk");
+		return response;
+		
+	}
+	
 	@GetMapping(value="/service/id/{idstring}")
 	public Response getServicesById(@PathVariable String idstring) {
 		String[] array = idstring.split(",");
