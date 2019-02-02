@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class PushNotificationsService {
 
 	private static final String FIREBASE_SERVER_KEY =
-			"AAAAJXSnXhw:APA91bH9y-SKYMMEzCS0xVHKUXh9xvu2j8hnngMHFWhR5LRCOubWXYBFhA7cq1EKn1XXNWJ7pSIgPfwsOYhQcYQBPW1nD6mJumLcLGy02-Lv2ahxHA7o2Byn7o2_jvLdixxZDozkiltp";
+			"AAAAC4p3Je8:APA91bE0Ah46bBDS13PE-CJoOFoBr2S96r3BRrPxFj-6wR2hHtPlO7MA4OXmVPScDAN4p0T6COVhqFXHsQErzefmy_6lZlXBwWeHzTfE-02rRA6oKijIaoSYsHGYTmcnoOWzE8dia0rC";
 	private static final String FIREBASE_API_URL = "https://fcm.googleapis.com/fcm/send";
 	
 	@Async

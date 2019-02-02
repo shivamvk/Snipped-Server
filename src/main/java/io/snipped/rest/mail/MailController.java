@@ -10,7 +10,6 @@ import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -39,6 +38,13 @@ public class MailController {
 		return "Okay from shivamvk";
 	}
 	
+	@PostMapping(value="/mail/order_cancelled")
+	public String sendEmailForOrderCancelled(@RequestParam String email, @RequestParam String orderId) throws MessagingException, IOException {
+		Order order = repository.findById(orderId).get();
+		sendMailCancellation(email, order);
+		return "Okay from shivamvk";
+	}
+	
 	public void sendMailForOrderPlaced(String email, Order order) throws MessagingException, IOException{
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -55,11 +61,11 @@ public class MailController {
 		Message msg = new MimeMessage(session);
 		msg.setFrom(new InternetAddress("snipped.in@gmail.com", false));
 		
-		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email+",internals.snipped@gmail.com"));
+		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email+",operations.snipped@gmail.com"));
 		msg.setSubject("Order Placed successfully!");
 		
 		MimeBodyPart messageBodyPart = new MimeBodyPart();
-		messageBodyPart.setContent(generateHtml(order), "text/html");
+		messageBodyPart.setContent(generateHtml(order, "Placed"), "text/html");
 		
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(messageBodyPart);
@@ -67,7 +73,7 @@ public class MailController {
 		Transport.send(msg);   
 	}
 	
-	public void sendMailToInternals(String email, Order order) throws AddressException, MessagingException {
+	public void sendMailCancellation(String email, Order order) throws MessagingException, IOException{
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
@@ -83,19 +89,20 @@ public class MailController {
 		Message msg = new MimeMessage(session);
 		msg.setFrom(new InternetAddress("snipped.in@gmail.com", false));
 		
-		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-		msg.setSubject("Order Placed successfully!");
+		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email+",operations.snipped@gmail.com"));
+		msg.setSubject("Order cancelled successfully!");
 		
 		MimeBodyPart messageBodyPart = new MimeBodyPart();
-		messageBodyPart.setContent(generateHtml(order), "text/html");
+		messageBodyPart.setContent(generateHtml(order, "Cancelled"), "text/html");
 		
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(messageBodyPart);
 		msg.setContent(multipart);
-		Transport.send(msg); 
+		Transport.send(msg);   
 	}
+
 	
-	public String generateHtml(Order order) {
+	public String generateHtml(Order order, String status) {
 		String html =
 				"<html"
 				+ "<head>"
@@ -105,7 +112,7 @@ public class MailController {
 				+ "<div class=\"container text-center\" style=\"text-align:center\">"
 				+ "<span style=\"text-align:center\">"
 				+ "<img src=\"https://res.cloudinary.com/cdnsnipped/image/upload/v1548677349/SALON_LOGO-03.jpg\" height=\"120px\" width=\"150px\">"
-				+ "<br><p><h3>Your Order has been placed succesfully!</h3></p><h4><p>We'll get back to you regarding your order shortly.</p></h4>"
+				+ "<br><p><h3>Your Order has been " + status + " succesfully!</h3></p><h4><p>We'll get back to you regarding your order shortly.</p></h4>"
 				+ "</span>"
 				+ "<h5>Your order details are;<br><br></h5>"
 				+ "<table class=\"table table-striped\" border=\"1\">"
@@ -147,7 +154,7 @@ public class MailController {
 	public String getServicesNameString(List<Services> list) {
 		String string = "";
 		for(int i=0; i< list.size(); i++) {
-			string = string + list.get(i).getName() + "(Rs. " + list.get(i).getPrice() + ")";
+			string = string + list.get(i).getName() + "(Rs. " + list.get(i).getPrice() + ", " + list.get(i).getGender()+ ")" ;
 			if(i != list.size() - 1) {
 				string = string + ", ";
 			}
