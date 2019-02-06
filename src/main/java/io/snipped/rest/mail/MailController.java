@@ -154,7 +154,7 @@ public class MailController {
 	public String getServicesNameString(List<Services> list) {
 		String string = "";
 		for(int i=0; i< list.size(); i++) {
-			string = string + list.get(i).getName() + "(Rs. " + list.get(i).getPrice() + ", " + list.get(i).getGender()+ ")" ;
+			string = string + list.get(i).getName() + ", " + list.get(i).getSubcategory() + ", " + list.get(i).getCategory() + "(Rs. " + list.get(i).getPrice() + ", " + list.get(i).getGender()+ ")" ;
 			if(i != list.size() - 1) {
 				string = string + ", ";
 			}
