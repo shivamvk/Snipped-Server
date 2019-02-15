@@ -1,6 +1,9 @@
 package io.snipped.rest.address;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import io.snipped.rest.response.Response;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +39,11 @@ public class AddressController {
 	}
 	
 	@GetMapping(value="/address/{user}")
-	public List<Address> getAddress(@PathVariable String user){
-		return service.getListByUser(user);
+	public Response getAddress(@PathVariable String user){
+		List<Address> list = service.getListByUser(user);
+		List<Object> responseList = new ArrayList<>();
+		responseList.addAll(list);
+		return new Response(200, responseList, "okay from shivamvk");
 	}
 	
 }
