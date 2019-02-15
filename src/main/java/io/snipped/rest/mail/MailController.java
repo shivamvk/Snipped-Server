@@ -3,6 +3,7 @@ package io.snipped.rest.mail;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,15 +11,19 @@ import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import io.snipped.rest.order.Order;
 import io.snipped.rest.order.OrderRepository;
@@ -43,6 +48,51 @@ public class MailController {
 		Order order = repository.findById(orderId).get();
 		sendMailCancellation(email, order);
 		return "Okay from shivamvk";
+	}
+	
+	@GetMapping(value="/mail/{email}")
+	public String ashishSendMail(@PathVariable String email) throws AddressException, MessagingException {
+		return sendAshishEmail(email);
+	}
+	
+	@GetMapping(value="/snipped")
+	public RedirectView redirect() {
+		RedirectView redirectView = new RedirectView();
+	    redirectView.setUrl("https://play.google.com/store/apps/details?id=in.mobileapp.snipped");
+	    return redirectView;
+	}
+	
+	public String sendAshishEmail(String email) throws AddressException, MessagingException {
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+		      protected PasswordAuthentication getPasswordAuthentication() {
+		         return new PasswordAuthentication("tohfldeveloper@gmail.com", "tohfl@6677");
+		      }
+		   });
+		
+		Message msg = new MimeMessage(session);
+		msg.setFrom(new InternetAddress("tohfldeveloper@gmail.com", false));
+		
+		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+		msg.setSubject("Verify your email!");
+		
+		Random random = new Random();
+		int otp = random.nextInt(10000);
+		
+		MimeBodyPart messageBodyPart = new MimeBodyPart();
+		messageBodyPart.setContent("<h3>Please open the app and enter the OTP: " + otp + "</h3>", "text/html");
+		
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(messageBodyPart);
+		msg.setContent(multipart);
+		Transport.send(msg);  
+		
+		return otp + "";
 	}
 	
 	public void sendMailForOrderPlaced(String email, Order order) throws MessagingException, IOException{

@@ -3,11 +3,13 @@ package io.snipped.rest.order;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 
 import io.snipped.rest.services.Services;
 
 public class Order {
 
+	@Id
 	ObjectId _id;
 	String phone;
 	List<Services> services;
